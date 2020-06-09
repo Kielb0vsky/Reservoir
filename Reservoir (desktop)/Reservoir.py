@@ -378,9 +378,8 @@ VALUES (?, ?)'''
 
             def pokoje(self):
                 com = '''SELECT Pokoj_hotelowy.Id_pokoju FROM Pokoj_hotelowy, Rezerwacja 
-WHERE Pokoj_hotelowy.Id_pokoju NOT IN (SELECT Pokoj_hotelowyId_pokoju FROM Rezerwacja WHERE date('{}', '+{} day') BETWEEN Termin_rozpoczecia and Termin_zakonczenia)
-AND Rezerwacja.Stan_rezerwacji NOT IN ('anulowana', 'zakończona')
-ORDER BY Pokoj_hotelowy.Nr_pokoju ASC'''
+    WHERE Pokoj_hotelowy.Id_pokoju NOT IN (SELECT Pokoj_hotelowyId_pokoju FROM Rezerwacja WHERE date('{}', '+{} day') BETWEEN Termin_rozpoczecia and Termin_zakonczenia)
+    ORDER BY Pokoj_hotelowy.Nr_pokoju ASC'''
                 days = self.dni.get()
                 start = self.data.get()
                 if len(days) == 0 or len(start) == 0:
@@ -388,7 +387,7 @@ ORDER BY Pokoj_hotelowy.Nr_pokoju ASC'''
                 pokoje = []
                 for i in range(0, int(days)):
                     pokoje.append(self.executeSQLcommand(com.format(start, i)))
-                for i in range(1, len(pokoje) - 1):
+                for i in range(1, len(pokoje)):
                     pokoje[0] = intersection(pokoje[0],pokoje[i])
                 wolne = []
                 for i in range(0, len(pokoje[0])):
@@ -599,7 +598,6 @@ Kwota do zapłaty wynosi {} PLN'''.format(self.kwota))
                 def pokoje(self):
                     com = '''SELECT Pokoj_hotelowy.Id_pokoju FROM Pokoj_hotelowy, Rezerwacja 
     WHERE Pokoj_hotelowy.Id_pokoju NOT IN (SELECT Pokoj_hotelowyId_pokoju FROM Rezerwacja WHERE date('{}', '+{} day') BETWEEN Termin_rozpoczecia and Termin_zakonczenia)
-    AND Rezerwacja.Stan_rezerwacji NOT IN ('anulowana', 'zakończona')
     ORDER BY Pokoj_hotelowy.Nr_pokoju ASC'''
                     days = self.dni.get()
                     start = self.data.get()
@@ -608,7 +606,7 @@ Kwota do zapłaty wynosi {} PLN'''.format(self.kwota))
                     pokoje = []
                     for i in range(0, int(days)):
                         pokoje.append(self.executeSQLcommand(com.format(start, i)))
-                    for i in range(1, len(pokoje) - 1):
+                    for i in range(1, len(pokoje)):
                         pokoje[0] = intersection(pokoje[0],pokoje[i])
                     wolne = []
                     for i in range(0, len(pokoje[0])):
