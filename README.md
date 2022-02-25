@@ -1,2 +1,2 @@
 # Reservoir
-System zarządzania hotelarzem
+System zarządzania hotelem
